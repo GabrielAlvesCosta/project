@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 
 from models.repositorio import RepositorioUsuarios
 
-usuario_bp = Blueprint('usuario', __name__, template_folder='../views/templates')
+usuario_bp = Blueprint('auth', __name__, template_folder='../views/templates')
 
 repo = RepositorioUsuarios()
 
