@@ -1,0 +1,50 @@
+Realiza login
+Passa por validações adicionais de segurança
+Acessa uma área protegida (/dashboard)
+Pode encerrar sessão (/logout)
+
+em models, só usuario_model.py
+em controllers, só auth_controller.py
+colocar database.sql aqui
+
+3. Regra de Negócio (Escolher 1 ou mais)
+Implemente pelo menos uma:
+🔸 Bloqueio por Tentativas
+Após 3 erros → usuário é desativado
+🔸 Horário de Acesso
+Login permitido apenas entre 08h e 18h
+🔸 Primeiro Acesso
+Se ultimo_login == NULL:
+Redirecionar para /primeiro-acesso
+Usuário deve trocar senha
+
+4. Tela Protegida (/dashboard)
+Só acessível se o usuário estiver autenticado
+Caso contrário → redirecionar para /login
+
+5. Sessão
+Utilizar session do Flask
+Armazenar ID ou email do usuário logado
+
+6. Logout (Obrigatório)
+Criar rota:
+/logout
+Deve limpar a sessão
+Redirecionar para login
+Exibir mensagem de sucesso
+
+7. Flash Messages (Obrigatório)
+Utilizar:
+from flask import flash
+Exibir mensagens como:
+❌ "Usuário ou senha inválidos"
+⚠️ "Usuário bloqueado"
+✅ "Login realizado com sucesso"
+👋 "Logout realizado com sucesso"
+
+8. Controle de Acesso (Decorator)
+Criar um decorator:
+def login_required(f):
+   ...
+Bloquear acesso a rotas protegidas
+Evitar repetição de código

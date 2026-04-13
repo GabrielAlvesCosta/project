@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="/static/dashboard.css" />
+</head>
+
+<body>
+<div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+</div>
+
+    <div class="container">
+        <div style="text-align: center; display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+    <h1 style="margin: 0; color: #111827; font-size: 24px;">Usuários Cadastrados</h1>
+    <h2 style="margin: 0; color: #111827; font-size: 24px;">Total de usuários: {{ usuarios|length }}</h2>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+    <span style="font-size: 24px; font-weight: bold; color: #111827;">Logado como: {{ session.get('usuario_nome') }}</span>
+    <span style="font-size: 14px; font-weight: bold;text-transform: uppercase; 
+        color: {% if session.get('cargo') == 'admin' %}#1d4ed8{% else %}#374151{% endif %};">
+        {{ session.get('cargo') }}
+    </span>
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px;">
+    <strong style="font-size: 18px; color: #111827;">Ordenar Idade:</strong>
+    <a href="{{ url_for('usuario.listar_usuarios', q=busca, ordem='asc') }}" class="btn-limpar-grande" style="background-color: #3b82f6;">↑ Menor</a>
+    <a href="{{ url_for('usuario.listar_usuarios', q=busca, ordem='desc') }}" class="btn-limpar-grande" style="background-color: #1e40af;">↓ Maior</a>
+    
+<form action="{{ url_for('usuario.listar_usuarios') }}" method="GET" style="display: inline-block; margin-top: 10px;">
+                <input type="text" 
+                       name="q" 
+                       placeholder="Buscar por nome ou CPF" 
+                       value="{{ busca if busca else '' }}"
+                       class="search-form"
+                       style="font-size: 16px; padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+                {% if busca %}
+                    <a href="{{ url_for('usuario.listar_usuarios') }}" class="btn-limpar-grande">Limpar</a>
+                {% endif %}
+    </form>
+</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>E-mail</th>
+                    <th>Idade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.cpf }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.idade }}</td>
+                    <td>
+                        <div class="acoes">
+                            
+                            {% if session.get('cargo') == 'admin' or session.get('cpf')|string == usuario.cpf|string %}
+                                
+                                <a href="{{ url_for('usuario.editar_usuario', cpf=usuario.cpf) }}">
+                                    <button type="button" class="btn-editar">Editar</button>
+                                </a>
+
+                                {% if session.get('cargo') == 'admin' %}
+                                    <form action="{{ url_for('usuario.deletar_usuario') }}"
+                                          method="post"
+                                          onsubmit="return confirm('Tem certeza que deseja deletar este usuário?');"
+                                          style="display: inline;">
+                                        <input type="hidden" name="cpf" value="{{ usuario.cpf }}" />
+                                        <button type="submit" class="btn-excluir">Excluir</button>
+                                    </form>
+                                {% endif %}
+
+                            {% else %}
+                                <span style="color: #999; font-size: 11px;">Sem permissão</span>
+                            {% endif %}
+
+                        </div>
+                    </td> 
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 20px; color: #666;">
+                        <strong>Nenhum usuário encontrado.</strong>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> 
+        <a href="/logout" class="sair">Sair</a>
+    </div>
+    
+            
+</body>
+
+</html>
