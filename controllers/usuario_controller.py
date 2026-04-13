@@ -40,13 +40,6 @@ def listar_usuarios():
         ordem=ordem,
         )
 
-@usuario_bp.route("/usuarios/json", methods=["GET"])
-def listar_usuarios_json():
-    if not _usuario_logado():
-        return jsonify({"erro" : "Não autorizado!"}), 401
-    usuarios =  repo.listar()
-    return jsonify({u.to_ditc() for u in usuarios})
-
 # EDIÇÂO
 @usuario_bp.route("/usuario/editar/<cpf>", methods=["GET", "POST"])
 def editar_usuario(cpf):

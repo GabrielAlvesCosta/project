@@ -35,4 +35,4 @@ def login():
 def logout():
     session.clear() 
     flash("Você saiu da sua conta com sucesso.", "sucesso")
-    return redirect(url_for("auth.home"))
+    return redirect(url_for("auth.login"))
