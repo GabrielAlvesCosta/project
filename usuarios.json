@@ -5,7 +5,7 @@
         "cpf": "08808494446",
         "email": "gollumalvescosta@gmail.com",
         "idade": 19,
-        "senha": "scrypt:32768:8:1$GWWzfZ2OzGLpt3sp$85c6157c76c27fe44cc6b5cb4eab02ad4c1225a0831181c2ccc7ae032634652ce2d9cbed337b1615dfdb0f1a626bd22c1dcbd7986a584dcea37141e8ab817f01",
+        "senha": "0",
         "cargo": "admin"
     },
     {

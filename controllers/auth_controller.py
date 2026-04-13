@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash
 from models.repositorio import RepositorioUsuarios
 from utils.validacoes import sanitizar_cpf
 # BLUEPRINT agrupa rotas
-auth_bp = Blueprint("auth", __name__)
+auth_bp = Blueprint('auth', __name__, template_folder='../views/templates')
 
 repo = RepositorioUsuarios()
 # PAGINA INICIAL 
