@@ -71,16 +71,15 @@ class RepositorioUsuarios:
         try:
             cusor = connection.cursor()
             sql = """INSERT INTO usuarios (
-            id, 
-            nome, 
-            cpf,
+            id,
             email, 
-            idade, 
-            senha, 
-            perfil)
-            VALUeS(%s, %s, %s, %s, %s, %s, %s)"""
-            valores = (usuario.id, usuario.nome, usuario.cpf, usuario.email,
-                       usuario.idade, usuario.senha)
+            senha,
+            ativo,
+            tentativas_login,
+            ultimo_login)
+            VALUeS(%s, %s, %s, %s, %s, %s)"""
+            valores = (usuario.id, usuario.email, usuario.senha,
+                       usuario.ativo, usuario.tentativas_login, usuario. ultimo_login)
             cusor.execute(sql, valores)
             connection.commit()
             return True

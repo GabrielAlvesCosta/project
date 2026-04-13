@@ -4,8 +4,6 @@ class Usuario:
     
     def __init__(self, nome: str , cpf_limpo: str, email: str, idade: int, senha: str):
         self.id = str(uuid.uuid4())
-        self.nome = nome
-        self.cpf = cpf_limpo
         self.email = email
         self.idade = idade
         self.senha = senha
