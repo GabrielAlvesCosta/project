@@ -3,15 +3,13 @@ from werkzeug.security import generate_password_hash
 
 from models.repositorio import RepositorioUsuarios
 
-usuario_bp = Blueprint("usuario", __name__)
+usuario_bp = Blueprint('usuario', __name__, template_folder='../views/templates')
 
 repo = RepositorioUsuarios()
 
 def _usuario_logado() -> bool:
     return "id" in session
 
-def _eh_admin() -> bool:
-    return session.get("cargo") == "admin"
 # LISTAGEM
 @usuario_bp.route("/dashboard", methods=["GET"])
 def listar_usuarios():
