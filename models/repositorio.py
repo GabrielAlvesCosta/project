@@ -2,7 +2,6 @@ import mysql.connector
 
 from mysql.connector import Error
 from models.usuario import Usuario
-from utils.validacoes import sanitizar_cpf
 
 class RepositorioUsuarios:
 #-------Banco de Dados----------------
@@ -72,14 +71,17 @@ class RepositorioUsuarios:
             senha,
             ativo,
             tentativas_login,
-            ultimo_login)
-            VALUES(%s, %s, %s, %s, %s)"""
+            ultimo_login
+            bloqueado_ate)
+            VALUES(%s, %s, %s, %s, %s, %s)"""
             if str(usuario.tentativas_login).strip() == "" or usuario.tentativas_login is None:
                 usuario.tentativas_login = 0
             if usuario.ultimo_login in ("[]", "", " ", None):
                 usuario.ultimo_login = None
+            if usuario.bloqueado_ate in ("[]", "", " ", None):
+                usuario.bloqueado_ate = None
             valores = (usuario.email, usuario.senha, usuario.ativo, 
-                       usuario.tentativas_login, usuario.ultimo_login)
+                       usuario.tentativas_login, usuario.ultimo_login, usuario.bloqueado_ate)
             cursor.execute(sql, valores)
             connection.commit()
             return True
@@ -107,25 +109,6 @@ class RepositorioUsuarios:
             return cursor.rowcount > 0
         except Error as e:
             print(f"Erro ao atualizar o usuário: {e}")
-            return False
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-
-    def deletar(self, email: str) -> bool:
-        connection = self._get_connection()
-        if not connection:
-            return False
-        
-        try:
-            cursor = connection.cursor()
-            cursor.execute("DELETE FROM usuarios WHERE email=%s")
-            cursor.execute(sql, (email,))
-            connection.commit()
-            return cursor.rowcount > 0
-        except Error as e:
-            print(f"Erro ao deletar o usuário: {e}")
             return False
         finally:
             if connection.is_connected():

@@ -16,6 +16,4 @@ values ('usuario@teste.com', senha, TRUE);
 
 select * from usuarios;
 
-create user 'mickey'@'localhost' identified by 'admin';
-grant all privileges on database1 to 'mickey'@'localhost';
-flush privileges;
+ALTER TABLE usuarios ADD COLUMN bloqueado_ate DATETIME NULL;
