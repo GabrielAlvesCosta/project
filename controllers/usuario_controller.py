@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 
 from models.repositorio import RepositorioUsuarios
 
-usuario_bp = Blueprint('auth', __name__, template_folder='../views/templates')
+usuario_bp = Blueprint('usuario', __name__, template_folder='../views/templates')
 
 repo = RepositorioUsuarios()
 
@@ -19,35 +19,19 @@ def listar_usuarios():
     
     usuarios= repo.listar()
 
-# BUSCAR POR NOME OU CPF
-    busca = request.args.get("q", "").strip().lower()
-    if busca:
-        usuarios = [u for u in usuarios
-                    if busca in u.nome.lower()
-                    or busca in u.cpf.lower()]
-# ORDENAR POR IDADE
-    ordem = request.args.get("ordem", "")
-    if ordem == "asc":
-        usuarios = sorted(usuarios, key=lambda u: u.idade)
-    elif ordem == "desc":
-        usuarios = sorted(usuarios, key=lambda u: u.idade, reverse=True)
-    
     return render_template(
-        "usuarios.html",
+        "dashboard.html",
         usuarios = usuarios, #FUNÇÂO = VARIAVEL
-        total=len(usuarios),
-        busca=busca,
-        ordem=ordem,
         )
 
 # EDIÇÂO
-@usuario_bp.route("/usuario/editar/<cpf>", methods=["GET", "POST"])
-def editar_usuario(cpf):
+@usuario_bp.route("/usuario/editar/<email>", methods=["GET", "POST"])
+def editar_usuario(email):
     if not _usuario_logado():
         flash("Não autorizado!", "erro")
         return redirect(url_for("auth.login"))
     
-    usuario = repo.buscar_por_cpf(cpf)
+    usuario = repo.buscar_por_cpf(email)
 
     if not usuario:
         flash("Usuário não encontrado", "erro")
@@ -55,28 +39,14 @@ def editar_usuario(cpf):
     # PERMIÇÔES: ADMIN=TODOS COMUM=SELF
     _eh_admin = session.get("cargo") == "admin"
 
-    eh_proprio = session.get("cpf") == usuario.cpf
+    eh_proprio = session.get("email") == usuario.email
     
     if not _eh_admin and not eh_proprio:
         flash("Você só pode editar o seu próprio perfil!", "erro")
         return redirect(url_for("usuario.listar_usuarios"))
     
     if request.method == "GET":
-        return render_template("editar_usuario.html", usuario=usuario)
-    
-    try:
-        idade = int(request.form.get("idade", 0))
-    except ValueError:
-        flash("Idade inválida!", "erro")
-        return redirect(url_for("usuario.editar_usuario", cpf=cpf))
-
-    if idade < 18:
-        flash("Usuário de ser maior de 18 anos!", "erro")
-        return redirect(url_for("usuario.editar_usuario", cpf=cpf))
-    
-    usuario.nome = request.form.get("nome", "").strip()
-    usuario.email = request.form.get("email", "").strip()
-    usuario.idade = idade
+        return render_template("primeiro_acesso.html", usuario=usuario)
 
     senha = request.form.get("senha", "")
     if senha:

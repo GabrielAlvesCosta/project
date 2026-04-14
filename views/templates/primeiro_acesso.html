@@ -23,26 +23,39 @@
 </div>
     <form method="POST">
 
-      <h2>Editar Usuário</h2>
-        <label>Nome</label>
-        <input type="text" name="nome" value="{{ usuario.nome }}" required>
+      <h2>Criar Senha</h2>
 
-        <label>E-mail</label>
-        <input type="email" name="email" value="{{ usuario.email }}" required>
-
-        <label>Idade</label>
-        <input type="number" name="idade" value="{{ usuario.idade }}" required>
-
-        <label>Nova Senha (opcional)</label>
-        <input type="password" name="senha" placeholder="Deixe em branco para manter a atual">
+       <div class="password-field">
+                <input type="password" id="senha" name="senha" required />
+                <span id="toggleSenha" class="toggle-password" title="Mostrar senha">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                         viewBox="0 0 24 24" fill="none"
+                         stroke="#374151" stroke-width="2"
+                         stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </span>
+            </div>
 
         <div class="botoes">
             <button type="submit" class="btn-salvar">Salvar Alterações</button>
-            <a href="{{ url_for('usuario.listar_usuarios') }}" class="btn-voltar">Cancelar</a>
         </div>
 
     </form>
 </div>
+
+<script>
+        const senhaInput = document.getElementById('senha');
+        const toggle = document.getElementById('toggleSenha');
+        const eyeIcon = toggle.querySelector('svg');
+
+        toggle.addEventListener('click', function () {
+            const visible = senhaInput.type === 'text';
+            senhaInput.type = visible ? 'password' : 'text';
+            eyeIcon.setAttribute('stroke', visible ? '#374151' : '#2563eb');
+        });
+    </script>
 
 </body>
 </html>

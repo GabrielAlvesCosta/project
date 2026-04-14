@@ -1,3 +1,5 @@
+baseado em tudos esses scripts, preciso fazer uma forma de login usando o banco de dados, com uma pagina dashbord que tenha um logout, e se ultimo_login == NULL redireciona para à pagina de primeiro acesso onde o usuário deve trocar senha
+
 Realiza login
 Passa por validações adicionais de segurança
 Acessa uma área protegida (/dashboard)

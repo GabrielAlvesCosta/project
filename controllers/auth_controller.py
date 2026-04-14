@@ -15,19 +15,18 @@ def home():
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        cpf_digitado = sanitizar_cpf(request.form.get("cpf", ""))
+        email        = request.form.get("email", "")
         senha        = request.form.get("senha", "")
 
-        usuario = repo.buscar_por_cpf(cpf_digitado)
+        usuario = repo.buscar_por_cpf(email)
 
         if usuario and check_password_hash(usuario.senha, senha):
             session["id"] = usuario.id
-            session["nome"] = usuario.nome
-            session['cpf'] = usuario.cpf
-            flash(f"Bem-vindo, {usuario.nome}!", "sucesso")
+            session['email'] = usuario.email
+            flash(f"Bem-vindo, {usuario.email}!", "sucesso")
             return redirect(url_for("usuario.listar_usuarios"))
         
-        flash("CPF ou Senha inválidos!", "erro")
+        flash("Email ou Senha inválidos!", "erro")
     
     return render_template("login.html")
 # LOGOUT

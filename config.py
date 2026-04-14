@@ -16,9 +16,9 @@ def migrar_dados():
     for dados_usuario in dados_json:
         usuario = Usuario.from_dict(dados_usuario)
         if repo.salvar(usuario):
-            print(f"Usuário {usuario.nome} sucesso!")
+            print(f"Usuário {usuario.email} sucesso!")
         else:
-            print(f"Erro ao migrar usuário {usuario.nome}!")
+            print(f"Erro ao migrar usuário {usuario.email}!")
         
     print("Migração concluida!")
 
