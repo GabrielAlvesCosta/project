@@ -34,12 +34,12 @@ def login():
                 usuario.tentativas_login = 0
                 usuario.bloqueado_ate = None
                 
-            if usuario.ultimo_login is None:
-                    session["id"] = usuario.id
-                    session['email'] = usuario.email
-                    repo.atualizar(usuario)
-                    flash("Este é o seu primeiro acesso. Por favor, troque sua senha.", "sucesso")                    # Redireciona para a rota da página de primeiro acesso
-                    return redirect(url_for("auth.primeiro_acesso"))
+        if usuario.ultimo_login is None:
+                session["id"] = usuario.id
+                session['email'] = usuario.email
+                repo.atualizar(usuario)
+                flash("Este é o seu primeiro acesso. Por favor, troque sua senha.", "sucesso")                    # Redireciona para a rota da página de primeiro acesso
+                return redirect(url_for("usuario.editar_usuario", email=usuario.email))
             
         usuario.ultimo_login = datetime.now()
         repo.atualizar(usuario)
@@ -55,9 +55,9 @@ def login():
             if usuario.tentativas_login >= 3:
                     usuario.bloqueado_ate = datetime.now() + timedelta(minutes=30)
                     flash("Você errou a senha 3 vezes. Conta bloqueada por 30 minutos.", "erro")
-                else:
-                    tentativas_restantes = 3 - usuario.tentativas_login
-                    flash(f"Email ou Senha inválidos! Você tem mais {tentativas_restantes} tentativa(s).", "erro")
+            else:
+                tentativas_restantes = 3 - usuario.tentativas_login
+                flash(f"Email ou Senha inválidos! Você tem mais {tentativas_restantes} tentativa(s).", "erro")
                 
                 repo.atualizar(usuario)
 
@@ -65,6 +65,14 @@ def login():
     
     return render_template("login.html")
 # LOGOUT
+
+@auth_bp.after_app_request
+def evitar_cache(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
+
 @auth_bp.route("/logout")
 def logout():
     session.clear() 

@@ -100,9 +100,10 @@ class RepositorioUsuarios:
         
         try:
             cursor = connection.cursor()
-            sql = """UPDATE usuarios SET senha=%s WHERE email=%s"""
+            sql = """UPDATE usuarios SET senha=%s, tentativas_login=%s, ultimo_login=%s, bloqueado_ate=%s WHERE email=%s"""
             valores = (
-                        usuario_atualizado.senha, usuario_atualizado.email
+                        usuario_atualizado.senha,usuario_atualizado.tentativas_login, usuario_atualizado.ultimo_login,
+                        usuario_atualizado.bloqueado_ate, usuario_atualizado.email
                     )
             cursor.execute(sql, valores)
             connection.commit()

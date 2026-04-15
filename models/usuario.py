@@ -26,11 +26,11 @@ class Usuario:
     @classmethod
     def from_dict(cls, dados:dict) -> "Usuario":
         usuario         = cls.__new__(cls)
-        usuario.id      = dados.get("id", str(uuid.uuid4()))
+        usuario.id      = dados.get("id", " ")
         usuario.email   = dados.get("email", " ")
-        usuario.senha   = dados.get("senha", "")
+        usuario.senha   = dados.get("senha", " ")
         usuario.ativo = dados.get("ativo", " ")
-        usuario.tentativas_login = dados.get("tentativas_login,", " ")
+        usuario.tentativas_login = dados.get("tentativas_login", 0)
         usuario.ultimo_login = dados.get("ultimo_login", " ")
         usuario.bloqueado_ate = dados.get("bloqueado_ate"," ")
         return usuario
