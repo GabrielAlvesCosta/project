@@ -29,7 +29,7 @@ def login_required(f):
 def login():
     if request.method == "POST":
         hora_atual = datetime.now().hour
-        if not (0 <= hora_atual < 23):
+        if not (8 <= hora_atual < 18):
             flash("O acesso ao sistema só é permitido entre 08h e 18h.", "erro")
             return render_template("login.html")
         
