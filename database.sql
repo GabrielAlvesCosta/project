@@ -16,6 +16,12 @@ ALTER TABLE usuarios ADD COLUMN bloqueado_ate DATETIME NULL;
 insert into usuarios (email, senha, ativo)
 values ('usuario@teste.com', senha, TRUE);
 
+insert into usuarios (email, senha, ativo)
+values ('teste@teste.com', NULL, TRUE);
+
+insert into usuarios (email, senha, ativo)
+values ('analise@teste.com', 0, TRUE);
+
 select * from usuarios;
  
  UPDATE usuarios SET bloqueado_ate = NUll
