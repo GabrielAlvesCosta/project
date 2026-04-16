@@ -1,15 +1,51 @@
+from datetime import datetime
 import mysql.connector
-
 from mysql.connector import Error
-from models.usuario import Usuario
 
-class RepositorioUsuarios:
-#-------Banco de Dados----------------
+class Usuario:
+    
+    def __init__(self, email: str, senha: str, id: int | None = None, ativo: bool = True, tentativas_login: int = 0, 
+                 ultimo_login: datetime | None = None,bloqueado_ate: datetime | None = None):
+        self.id = id
+        self.email = email
+        self.senha = senha
+        self.ativo = ativo
+        self.tentativas_login = tentativas_login
+        self.ultimo_login = ultimo_login
+        self.bloqueado_ate = bloqueado_ate
+
+    def to_dict(self):
+        return {
+                "id" : self.id,
+                "email" : self.email,
+                "senha" : self.senha,
+                "ativo" : self.ativo,
+                "tentativas_login" : self.tentativas_login,
+                "ultimo_login" : self.ultimo_login,
+                "bloqueado_ate" : self.bloqueado_ate
+            }
+    
+    @classmethod
+    def from_dict(cls, dados:dict) -> "Usuario":
+        usuario         = cls.__new__(cls)
+        usuario.id      = dados.get("id")
+        usuario.email   = dados.get("email")
+        usuario.senha   = dados.get("senha")
+        usuario.ativo = dados.get("ativo", True)
+        tentativas = dados.get("tentativas_login")
+        usuario.tentativas_login = int(tentativas) if tentativas else 0
+        usuario.ultimo_login = dados.get("ultimo_login")
+        usuario.bloqueado_ate = dados.get("bloqueado_ate")
+        return usuario
+    
+    def _repr_(self) -> str:
+        return f"<Usuario email={self.email}"
+
     def __init__(self):
         self.connection_config = {
             'host': 'localhost',
             'user': 'root',
-            'password': 'admin',
+            'password': '',
             'database': 'database1'
         }
     
@@ -21,7 +57,6 @@ class RepositorioUsuarios:
             print(f"Erro ao conectar ao Mysql: {e}")
             return None
 
-#-----Leitura-------------
     def listar(self) -> list[Usuario]:
         connection = self._get_connection()
         if not connection:
@@ -40,7 +75,7 @@ class RepositorioUsuarios:
                 cursor.close()
                 connection.close()
         
-    def buscar_por_cpf(self, email: str) -> Usuario | None:
+    def buscar_por_email(self, email: str) -> Usuario | None:
         connection = self._get_connection()
         if not connection:
             return None
@@ -58,7 +93,6 @@ class RepositorioUsuarios:
                 cursor.close()
                 connection.close()
     
-#------Escritra-------------
     def salvar(self, usuario: Usuario) -> bool:
         connection = self._get_connection()
         if not connection:
@@ -71,7 +105,7 @@ class RepositorioUsuarios:
             senha,
             ativo,
             tentativas_login,
-            ultimo_login
+            ultimo_login,
             bloqueado_ate)
             VALUES(%s, %s, %s, %s, %s, %s)"""
             if str(usuario.tentativas_login).strip() == "" or usuario.tentativas_login is None:

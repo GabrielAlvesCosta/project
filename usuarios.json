@@ -22,5 +22,30 @@
         "ativo": "1",
         "tentativas_login": 0,
         "ultimo_login":"[]"
+    },
+    {
+        "id": "",
+        "email": "gollumalvesco@gmail.com",
+        "senha": "scrypt:32768:8:1$Dxkjs7Rz4izv5yYW$8a276f3cfacbb8c72912639f9463dd6f21ee44b314fd77cbcf98c54c0d4bd1e5b9e4663866fe9f7b5eaed9fd8dee44bfda94c82d5a74da616b1cdfd05b0e4857",
+        "ativo": "1",
+        "tentativas_login": 0,
+        "ultimo_login":"[]"
+    },
+    {
+        "id": "",
+        "email": "gollumalves@gmail.com",
+        "senha": "scrypt:32768:8:1$Dxkjs7Rz4izv5yYW$8a276f3cfacbb8c72912639f9463dd6f21ee44b314fd77cbcf98c54c0d4bd1e5b9e4663866fe9f7b5eaed9fd8dee44bfda94c82d5a74da616b1cdfd05b0e4857",
+        "ativo": "1",
+        "tentativas_login": 0,
+        "ultimo_login":"[]"
+    }
+    ,
+    {
+        "id": "",
+        "email": "gollumo@gmail.com",
+        "senha": "scrypt:32768:8:1$Dxkjs7Rz4izv5yYW$8a276f3cfacbb8c72912639f9463dd6f21ee44b314fd77cbcf98c54c0d4bd1e5b9e4663866fe9f7b5eaed9fd8dee44bfda94c82d5a74da616b1cdfd05b0e4857",
+        "ativo": "1",
+        "tentativas_login": 0,
+        "ultimo_login":"[]"
     }
 ]

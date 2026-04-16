@@ -2,12 +2,10 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Editar Usuário</title>
+    <title>Criar Senha</title>
     <link rel="stylesheet" href="/static/primeiro_acesso.css">
 </head>
 <body>
-
-
 
 <div class="container">
     <div class="flash-container">
@@ -20,42 +18,41 @@
         {% endfor %}
       {% endif %}
     {% endwith %}
-</div>
+    </div>
+
     <form method="POST">
+        <h2>Criar Senha</h2>
 
-      <h2>Criar Senha</h2>
-
-       <div class="password-field">
-                <input type="password" id="senha" name="senha" required />
-                <span id="toggleSenha" class="toggle-password" title="Mostrar senha">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                         viewBox="0 0 24 24" fill="none"
-                         stroke="#374151" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                        <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                </span>
-            </div>
+        <div class="password-field">
+            <input type="password" id="senha" name="senha" required />
+            <span id="toggleSenha" class="toggle-password" title="Mostrar senha">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                     viewBox="0 0 24 24" fill="none"
+                     stroke="#374151" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+            </span>
+        </div>
 
         <div class="botoes">
             <button type="submit" class="btn-salvar">Salvar Alterações</button>
         </div>
-
     </form>
 </div>
 
 <script>
-        const senhaInput = document.getElementById('senha');
-        const toggle = document.getElementById('toggleSenha');
-        const eyeIcon = toggle.querySelector('svg');
+    const senhaInput = document.getElementById('senha');
+    const toggle = document.getElementById('toggleSenha');
+    const eyeIcon = toggle.querySelector('svg');
 
-        toggle.addEventListener('click', function () {
-            const visible = senhaInput.type === 'text';
-            senhaInput.type = visible ? 'password' : 'text';
-            eyeIcon.setAttribute('stroke', visible ? '#374151' : '#2563eb');
-        });
-    </script>
+    toggle.addEventListener('click', function () {
+        const visible = senhaInput.type === 'text';
+        senhaInput.type = visible ? 'password' : 'text';
+        eyeIcon.setAttribute('stroke', visible ? '#374151' : '#2563eb');
+    });
+</script>
 
 </body>
 </html>

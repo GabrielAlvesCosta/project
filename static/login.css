@@ -11,13 +11,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 30px;
 }
 
 .container {
     width: 100%;
-    max-width: 420px;
-    padding: 35px;
+    max-width: 500px;
+    padding: 40px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
@@ -26,27 +26,27 @@ body {
 
 h2 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     color: #111827;
-    font-size: 24px;
+    font-size: 36px;
     font-weight: 700;
 }
 
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 18px;
     color: #374151;
 }
 
 input {
     width: 100%;
-    padding: 12px;
-    margin-bottom: 18px;
+    padding: 16px;
+    margin-bottom: 22px;
     border: 1px solid #d1d5db;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
     transition: all 0.2s ease-in-out;
 }
 
@@ -56,18 +56,38 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    padding-right: 60px;
+}
+
+.password-field .toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 button[type="submit"] {
     width: 100%;
-    padding: 12px;
+    padding: 18px;
     border: none;
     border-radius: 8px;
     background-color: #2563eb;
     color: white;
-    font-weight: 600;
-    font-size: 16px;
+    font-weight: bold;
+    font-size: 22px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 button[type="submit"]:hover {
@@ -77,10 +97,10 @@ button[type="submit"]:hover {
 }
 
 .alert {
-    padding: 12px 15px;
-    margin-bottom: 20px;
+    padding: 16px 20px;
+    margin-bottom: 25px;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     position: relative;
     display: flex;
@@ -101,15 +121,15 @@ button[type="submit"]:hover {
     border: 1px solid #f5c6cb;
 }
 
-/* Botão de fechar do alerta */
 .btn-close {
     background: none;
     border: none;
-    font-size: 18px;
+    font-size: 24px;
     cursor: pointer;
     color: inherit;
     opacity: 0.5;
     line-height: 1;
+    margin-left: 15px;
 }
 
 .btn-close:hover {
@@ -119,50 +139,4 @@ button[type="submit"]:hover {
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-a {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    background-color: #2563eb;
-    color: white;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    position: relative;
-    top: 50%;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-}
-
-a:hover {
-    background-color: #1d4ed8;
-    transform: translateY(-2px);
-}
-
-a:link, a:visited, a:hover, a:active {
-  text-decoration: none;
-}
-
-.password-field {
-    position: relative;
-}
-
-.password-field .toggle-password {
-    position: absolute;
-    right: 12px;
-    top: 37%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
-
-.password-field .toggle-password svg {
-    display: block;
 }
