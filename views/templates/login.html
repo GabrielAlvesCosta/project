@@ -12,12 +12,12 @@
         <h2>Login</h2>
         <form action="{{ url_for('auth.login') }}" method="POST">
 
-                  {% with messages = get_flashed_messages(with_categories=true) %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                        <span>{{ message }}</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
                     </div>
                     {% endfor %}
                 {% endif %}
@@ -25,11 +25,12 @@
 
             <label for="email">EMAIL:</label>
             <input type="text" id="email" name="email" placeholder="exemplo@email.com" required>
+            
             <label for="senha">Senha</label>
             <div class="password-field">
                 <input type="password" id="senha" name="senha" required />
                 <span id="toggleSenha" class="toggle-password" title="Mostrar senha">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
                          viewBox="0 0 24 24" fill="none"
                          stroke="#374151" stroke-width="2"
                          stroke-linecap="round" stroke-linejoin="round">
@@ -38,14 +39,12 @@
                     </svg>
                 </span>
             </div>
-            <button type="submit">Entrar</button><br><br>
             
+            <button type="submit">Entrar</button>
         </form>
     </div>
 
-    
-
-     <script>
+    <script>
         const senhaInput = document.getElementById('senha');
         const toggle = document.getElementById('toggleSenha');
         const eyeIcon = toggle.querySelector('svg');
@@ -55,7 +54,13 @@
             senhaInput.type = visible ? 'password' : 'text';
             eyeIcon.setAttribute('stroke', visible ? '#374151' : '#2563eb');
         });
-    </script>
 
+
+        document.querySelectorAll('.btn-close').forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.alert').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,7 +1,6 @@
 import json
 
-from models.repositorio import RepositorioUsuarios
-from models.usuario import Usuario
+from models.usuario_model import Usuario
 
 def migrar_dados():
     try:
@@ -11,7 +10,7 @@ def migrar_dados():
         print("Arquivo usuarios.json não encontrado!")
         return
     
-    repo = RepositorioUsuarios()
+    repo =Usuario()
 
     for dados_usuario in dados_json:
         usuario = Usuario.from_dict(dados_usuario)
