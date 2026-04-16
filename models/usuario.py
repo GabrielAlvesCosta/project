@@ -26,13 +26,14 @@ class Usuario:
     @classmethod
     def from_dict(cls, dados:dict) -> "Usuario":
         usuario         = cls.__new__(cls)
-        usuario.id      = dados.get("id", " ")
-        usuario.email   = dados.get("email", " ")
-        usuario.senha   = dados.get("senha", " ")
-        usuario.ativo = dados.get("ativo", " ")
-        usuario.tentativas_login = dados.get("tentativas_login", 0)
-        usuario.ultimo_login = dados.get("ultimo_login", " ")
-        usuario.bloqueado_ate = dados.get("bloqueado_ate"," ")
+        usuario.id      = dados.get("id",)
+        usuario.email   = dados.get("email")
+        usuario.senha   = dados.get("senha")
+        usuario.ativo = dados.get("ativo", TRUE)
+        tentativas = dados.get("tentativas_login")
+        usuario.tentativas_login = int(tentativas) if tentativas else 0
+        usuario.ultimo_login = dados.get("ultimo_login")
+        usuario.bloqueado_ate = dados.get("bloqueado_ate")
         return usuario
     
     def _repr_(self) -> str:

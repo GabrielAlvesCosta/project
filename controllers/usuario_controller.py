@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash 
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 from models.repositorio import RepositorioUsuarios
@@ -21,7 +21,7 @@ def listar_usuarios():
 
     return render_template(
         "dashboard.html",
-        usuarios = usuarios, #FUNÇÂO = VARIAVEL
+        usuarios = usuarios,
         )
 
 # EDIÇÂO
@@ -36,7 +36,6 @@ def editar_usuario(email):
     if not usuario:
         flash("Usuário não encontrado", "erro")
         return redirect(url_for("usuario.listar_usuarios"))
-    # PERMIÇÔES: ADMIN=TODOS COMUM=SELF
 
     eh_proprio = session.get("email") == usuario.email
     
