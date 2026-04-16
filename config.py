@@ -1,5 +1,4 @@
 import json
-
 from models.usuario_model import Usuario
 
 def migrar_dados():

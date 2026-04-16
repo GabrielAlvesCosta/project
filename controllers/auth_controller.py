@@ -1,7 +1,7 @@
 from functools import wraps
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from models.usuario_model import Usuario
 
 auth_bp = Blueprint('auth', __name__, template_folder='../views/templates')
@@ -43,16 +43,25 @@ def login():
                 tempo_restante = int((usuario.bloqueado_ate - datetime.now()).total_seconds() / 60)
                 flash(f"Conta bloqueada. Tente novamente em {tempo_restante} minutos.", "erro")
                 return render_template("login.html")
+            
+            senha_valida = False
+            
+            is_primeiro_acesso = usuario.senha in [None, '0', ''] or (usuario.ultimo_login is None)
 
-            if check_password_hash(usuario.senha, senha):
+            if is_primeiro_acesso:
+                    senha_valida = True
+            elif usuario.senha and check_password_hash(usuario.senha, senha):
+                senha_valida = True
+
+            if senha_valida:
                 usuario.tentativas_login = 0
                 usuario.bloqueado_ate = None
                 
-                if usuario.ultimo_login is None:
+                if is_primeiro_acesso:
                     session["id"] = usuario.id
                     session['email'] = usuario.email
                     repo.atualizar(usuario)
-                    flash("Este é o seu primeiro acesso. Por favor, troque sua senha.", "sucesso")
+                    flash("Este é o seu primeiro acesso. Por favor, crie sua senha.", "sucesso")
                     return redirect(url_for("auth.editar_usuario", email=usuario.email))
             
                 usuario.ultimo_login = datetime.now()
@@ -75,7 +84,7 @@ def login():
                 
                 repo.atualizar(usuario)
         else:    
-            flash("Email ou Senha inválidos!", "erro")
+            flash("Email não existe!", "erro")
     
     return render_template("login.html")
 
