@@ -16,6 +16,12 @@ ALTER TABLE usuarios ADD COLUMN bloqueado_ate DATETIME NULL;
 insert into usuarios (email, senha, ativo)
 values ('usuario@teste.com', senha, TRUE);
 
+insert into usuarios (email, senha, ativo)
+values ('teste@teste.com', NULL, TRUE);
+
+insert into usuarios (email, senha, ativo)
+values ('analise@teste.com', 0, TRUE);
+
 select * from usuarios;
 
 UPDATE usuarios SET senha = 'scrypt:32768:8:1$gm7CLEYhLxpfMfcP$09ff4fd9507b5afccab3e45ad73dd08d3a72ea0853358f1cd4a14586f324c768bf4de51c2ca511b64b237422aa3adb4a6ceee81b9087f9f393129d033fa31df7'
