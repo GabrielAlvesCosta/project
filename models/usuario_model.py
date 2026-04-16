@@ -1,5 +1,5 @@
-from datetime import datetime
 import mysql.connector
+from datetime import datetime
 from mysql.connector import Error
 
 class Usuario:
